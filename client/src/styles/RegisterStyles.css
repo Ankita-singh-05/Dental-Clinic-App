@@ -3,11 +3,44 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    color: #fff;
+    background-color: #025464;
 }
 
 .register-form{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding: 1.8em;
     width: 30%;
     border-radius: 10px;
+    background-color: #F6F8FA;
+    /* color: #e81f1f; */
 }
+
+.btn-custom {
+    background-color: #025464;
+    color: #fff;
+    font-size: 18px;
+    transition: #7895CB 0.3s ease, transform 0.3s ease;
+  }
+  
+  .btn-custom:hover {
+    background-color: #025464;
+    color: #fff;
+    border-color: #5678A9;
+    transform: scale(1.05);
+  }
+
+
+
+
+/* Primary Color: #7895CB (Used for buttons, highlights, and main elements)
+
+Secondary Color: #F6F8FA (Used for backgrounds, card sections, and container elements)
+
+Accent Color 1: #FFA69E (Used for important call-to-action buttons or alerts)
+
+Accent Color 2: #D4A5A5 (Used for secondary buttons or decorative elements)
+
+Text Color: #333333 (Used for general text content)
+
+Border Color: #CCCCCC (Used for dividing lines or borders) */

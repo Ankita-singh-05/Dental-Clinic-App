@@ -3,6 +3,7 @@ const colors = require("colors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+// const adminRoutes = require("./routes/adminRoutes");
 
 // dotenv config
 dotenv.config();
@@ -19,6 +20,19 @@ app.use(morgan('dev'));
 
 // routes
 app.use("/api/v1/users", require("./routes/userRoutes"));
+// app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/admin", require("./routes/adminRoutes"));
+
+// Default route
+// app.get("/", (req, res) => {
+//   res.send("Welcome to the API!");
+// });
+
+// // Error handling middleware
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).json({ message: "Internal Server Error" });
+// });
 
 // port
 const port = process.env.PORT || 8081
