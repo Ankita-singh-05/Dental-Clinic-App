@@ -14,11 +14,11 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { message, notification } from 'antd';
 
 const pages = [
-    { title: "Appointments", path: "/patient/appointments" },
+    { title: "Book Appointment", path: "/book-appointment" },
 ];
 const settings = [
-    { title: "Profile", path: "/patient/profile" },
-    // { title: "Account", path: "/patient/account" },
+    // { title: "Profile", path: "/patient/profile" },
+    { title: "Dashboard", path: "/" },
     { title: "Logout", path: "/login" },
 ];
 
@@ -142,7 +142,7 @@ const Navbar = () => {
                             <Avatar sx={{ 
                                 backgroundColor: "White",
                                 color: "black",
-                         }}>A</Avatar>
+                         }}></Avatar>
                             </IconButton>
                         </Tooltip>
                         <Menu

@@ -5,6 +5,7 @@ import { showLoading, hideLoading } from "../redux/features/alertSlice";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/RegisterStyles.css";
+import RegisterImage from "../images/register.jpg";
 
 const { Option } = Select;
 
@@ -42,52 +43,58 @@ const Register = () => {
 
   return (
     <>
-      <div className="form-container">
-        <Form
-          layout="vertical"
-          onFinish={onfinishHandler}
-          className="register-form"
-        >
-          <h1 className="text-center"> Register Now! </h1>
-          <Form.Item label="Name" name="name" required>
-            <Input type="text" required/>
-          </Form.Item>
+      <div className="register-container">
+        <div className="form-container">
+          <Form
+            layout="vertical"
+            onFinish={onfinishHandler}
+            className="register-form"
+          >
+            <h1 className="text-center"> Register Now! </h1>
+            <Form.Item label="Name" name="name" required>
+              <Input type="text" required />
+            </Form.Item>
 
-          <Form.Item label="Email" name="email" required>
-            <Input type="email" required/>
-          </Form.Item>
+            <Form.Item label="Email" name="email" required>
+              <Input type="email" required />
+            </Form.Item>
 
-          <Form.Item label="Gender" name="gender" required>
-            <Select placeholder="Select Gender">
-              <Option value="male">Male</Option>
-              <Option value="female">Female</Option>
-              <Option value="other">Other</Option>
-            </Select>
-          </Form.Item>
+            <Form.Item label="Gender" name="gender" required>
+              <Select placeholder="Select Gender">
+                <Option value="male">Male</Option>
+                <Option value="female">Female</Option>
+                <Option value="other">Other</Option>
+              </Select>
+            </Form.Item>
 
-          <Form.Item label="Mobile" name="mobile" required>
-            <Input type="text" required/>
-          </Form.Item>
+            <Form.Item label="Mobile" name="mobile" required>
+              <Input type="text" required />
+            </Form.Item>
 
-          <Form.Item label="Address" name="address" required>
-            <Input type="text" required/>
-          </Form.Item>
+            <Form.Item label="Address" name="address" required>
+              <Input type="text" required />
+            </Form.Item>
 
-          <Form.Item label="Password" name="password" required>
-            <Input type="password" required/>
-          </Form.Item>  
+            <Form.Item label="Password" name="password" required>
+              <Input type="password" required />
+            </Form.Item>
 
-          <Link to="/login">
-                {/* "Already part of our dental family?" */}
-                {/* Welcome back to our dental family! Log in here! */}
-                <span className="mr-3">Come on in! Existing members can login here!</span>
-          </Link> 
+            <Link to="/login">
+              {/* "Already part of our dental family?" */}
+              {/* Welcome back to our dental family! Log in here! */}
+              <span className="mr-3">
+                Come on in! Existing members can login here!
+              </span>
+            </Link>
 
             <button className="btn btn-custom" type="submit">
               Register
             </button>
-      
-        </Form>
+          </Form>
+        </div>
+        <div className="register-image-container">
+        <img src={RegisterImage} alt="register" />
+      </div>
       </div>
     </>
   );

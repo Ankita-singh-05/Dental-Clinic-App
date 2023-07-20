@@ -18,12 +18,13 @@ import { message, notification } from 'antd';
 const pages = [
     { title: "Appointments", path: "/admin/appointments" },
     { title: "Doctors", path: "/admin/doctors" },
-    { title: "Patient", path: "/admin/patient" },
+    { title: "Patient", path: "/admin/patients" },
 ]
 const settings = [
-    { title: "Profile", path: "/admin/profile" },
-    { title: "Patient", path: "/admin/patient" },
-    { title: "Dashboard", path: "/admin/" },
+    // { title: "Profile", path: "/admin/profile" },
+    { title: "Patient", path: "/admin/patients" },
+    { title: "Dashboard", path: "/admin" },
+    { title: "Onboard Doctors", path: "/admin/add-doctors" },
     { title: "Logout", path: "/login" },
 ];
 
@@ -53,19 +54,20 @@ const AdminNav = () => {
         } else if (page === 'Doctors') {
             navigate('/admin/doctors')
         } else if (page === 'Patient') {
-            navigate('/admin/patient')
+            navigate('/admin/patients')
         }
     };
 
     const handleSettingClick = (setting) => {
         console.log(`Clicked ${setting}`);
-        if (setting === 'Profile') {
-            navigate('/admin/profile')
-        } else if (setting === 'Account') {
-            navigate('/admin/account')
+        if (setting === 'Patient') {
+            navigate('/admin/patients')
         } else if (setting === 'Dashboard') {
-            navigate('/admin/dashboard')
-        } else if (setting === 'Logout') {
+            navigate('/admin')
+        } else if (setting === 'Onboard Doctors') {
+            navigate('/admin/add-doctors')
+        }
+        else if (setting === 'Logout') {
             handleLogout();
         }
     };

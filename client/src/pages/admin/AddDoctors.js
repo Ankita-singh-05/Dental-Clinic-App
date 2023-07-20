@@ -10,7 +10,7 @@ import "../../styles/AdminStyles.css";
 
 const AddDoctors = ({ doctor }) => {
 
-  const [form] = Form.useForm(); // Add this line
+  const [form] = Form.useForm();
 
 useEffect(() => {
   form.setFieldsValue(doctor); // Set initial form values based on the doctor prop
@@ -65,10 +65,12 @@ useEffect(() => {
 
   return (
     <>
+    <div style={{ backgroundColor: "#f0f0f0", height: "100vh" }}>
       <AdminNav />
+      <div className="doc-form-container">
       <Form layout="vertical" onFinish={onFinishHandler} className="m-4">
-      <h1 className="text-center">Onboard Doctors</h1>
-        <h4 className="">Personal Details : </h4>
+      <h1 className="text-center" style={{ color: "#0E2954" }}>Onboard Doctors</h1>
+        <h1 className="">Personal Details : </h1>
         <Row gutter={20}>
           <Col xs={24} md={24} lg={8}>
             <Form.Item
@@ -111,7 +113,7 @@ useEffect(() => {
             </Form.Item>
           </Col>
         </Row>
-        <h1>Professional Details :</h1>
+        <h1 className="mt-2">Professional Details :</h1>
         <Row gutter={20}>
           <Col xs={24} md={24} lg={8}>
             <Form.Item
@@ -156,6 +158,8 @@ useEffect(() => {
           </Col>
         </Row>
       </Form>
+      </div>
+      </div>
     </>
   )
 }

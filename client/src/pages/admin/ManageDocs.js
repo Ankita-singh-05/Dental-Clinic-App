@@ -18,7 +18,7 @@ const ManageDocs = () => {
   const [doctors, setDoctors] = useState([]);
 
   // To edit the existing doctors
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  // const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   useEffect(() => {
     fetchDoctors();
@@ -59,7 +59,7 @@ const ManageDocs = () => {
     <div>
       <AdminNav />
       <div className="containers">
-        <h2 className="heading text-left">Manage Doctors</h2>
+        <h2 className="heading">Manage Doctors</h2>
         <TableContainer component={Paper} className="mt-3 table-conatiner">
           <Table>
             <TableHead>
@@ -106,7 +106,7 @@ const ManageDocs = () => {
           </Table>
         </TableContainer>
         <Link to="/admin/add-doctors">
-          <Button variant="contained" color="primary" className="addDoc-btn">
+          <Button variant="contained" className="btn-custom">
             Add Doctor
           </Button>
         </Link>

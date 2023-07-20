@@ -12,9 +12,9 @@ const AdminPage = () => {
         <div className="hero">
           <div className="hero-content">
             <h1>Welcome to the Admin Panel</h1>
-            <p>Manage and control various aspects of the system</p>
+            <h3>Manage and control various aspects of the system</h3>
             <div className="button-group">
-              <Link to="/admin/appointments">
+              {/* <Link to="/admin/appointments">
                 <Button
                   variant="contained"
                   color="primary"
@@ -32,7 +32,7 @@ const AdminPage = () => {
                 >
                   Manage Appointments
                 </Button>
-              </Link>
+              </Link> */}
 
               <Link to="/admin/doctors">
                 <Button

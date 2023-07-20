@@ -88,15 +88,12 @@ const BookAppointment = () => {
         notification.success({
           message: "Appointment Booked Successfully",
         });
-        // TODO: Add any additional logic or display success message if needed
       } else {
         // Failed to book appointment
         console.error('Failed to book appointment');
-        // TODO: Display error message or handle the error as needed
       }
     } catch (error) {
       console.error('Error:', error);
-      // TODO: Display error message or handle the error as needed
     } finally {
       setLoading(false);
     }

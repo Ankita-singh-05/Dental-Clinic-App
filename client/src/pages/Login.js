@@ -1,11 +1,12 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { Form, Input, notification, message } from "antd";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../redux/features/alertSlice";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/RegisterStyles.css";
 import { setAdminStatus } from "../redux/features/adminSlice";
+import loginImage from "../images/login.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,14 +50,14 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div className="login-container">
       <div className="form-container">
         <Form
           layout="vertical"
           onFinish={onfinishHandler}
           className="register-form"
         >
-          <h1 className="text-center"> Login to Your Account </h1>
+          <h1 className="text-center">Login to Your Account</h1>
 
           <Form.Item label="Email" name="email">
             <Input type="email" required />
@@ -77,7 +78,10 @@ const Login = () => {
           </button>
         </Form>
       </div>
-    </>
+      <div className="login-image-container">
+        <img src={loginImage} alt="Login" />
+      </div>
+    </div>
   );
 };
 

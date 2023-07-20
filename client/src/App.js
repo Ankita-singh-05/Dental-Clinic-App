@@ -13,6 +13,8 @@ import BookAppointment from "./pages/BookAppointment";
 import ViewDoctors from "./pages/ViewDoctors";
 import ViewAppointments from "./pages/ViewAppointments";
 import AdminProtectedRoutes from "./components/AdminProtectedRoutes";
+import ManageAppointment from "./pages/admin/ManageAppointment";
+import ManageUsers from "./pages/admin/ManageUsers";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -36,7 +38,7 @@ function App() {
               element={
                 <AdminProtectedRoutes>
                   <AdminPage />
-                 </AdminProtectedRoutes>
+                </AdminProtectedRoutes>
               }
             ></Route>
             <Route
@@ -64,10 +66,27 @@ function App() {
               }
             ></Route>
             <Route
+              path="/admin/appointments"
+              element={
+                <AdminProtectedRoutes>
+                  <ManageAppointment />
+                </AdminProtectedRoutes>
+              }
+            ></Route>
+            <Route
               path="/admin/add-doctors"
               element={
                 <AdminProtectedRoutes>
                   <AddDoctors />
+                </AdminProtectedRoutes>
+              }
+            ></Route>
+
+            <Route
+              path="/admin/patients"
+              element={
+                <AdminProtectedRoutes>
+                  <ManageUsers />
                 </AdminProtectedRoutes>
               }
             ></Route>
@@ -88,14 +107,14 @@ function App() {
               }
             ></Route>
 
-            <Route
+            {/* <Route
               path="/view-appointments"
               element={
                 // <ProtectedRoutes>
                 <ViewAppointments />
                 // </ProtectedRoutes>
               }
-            ></Route>
+            ></Route> */}
 
             {/* <Route path="/404" element={<NotFoundPage />}></Route> */}
             {/* Add a catch-all route for any other unknown routes */}

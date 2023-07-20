@@ -1,19 +1,21 @@
-.form-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: #fff;
-    background-color: #025464;
+.login-container, .register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  height: 100vh;
 }
 
+/* .form-container{
+    color: #fff;
+    height: 100vh;
+    margin: 5rem;
+} */
+
 .register-form{
-    /* border: 1px solid black; */
     padding: 1.8em;
-    width: 30%;
     border-radius: 10px;
-    background-color: #F6F8FA;
-    /* color: #e81f1f; */
+    background-color: #fff;
 }
 
 .btn-custom {
@@ -29,6 +31,25 @@
     border-color: #5678A9;
     transform: scale(1.05);
   }
+
+ 
+
+/* Login Styles */
+.login-image-container, .register-image-container {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-image-container img, .register-image-container img{
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+  
 
 
 

@@ -88,7 +88,140 @@
   justify-content: center;
   gap: 18px;
   align-items: center;
-  padding: 22px;
+  padding: 30px;
 }
+
+
+/* Add Doctors Page Styling */
+
+.form-container {
+  padding: 20px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+h4 {
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+
+/* Form item labels */
+.ant-form-item-label label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Form item input fields */
+.ant-form-item-control-input input {
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+/* Time picker width */
+.ant-picker-time-panel-column {
+  width: 120px;
+}
+
+/* Submit button */
+.d-flex.justify-end {
+  margin-top: 20px;
+}
+
+/* Custom button style */
+.btn-custom {
+  background-color: #025464;
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-custom:hover {
+  background-color: #025464;
+}
+
+.btn-custom:active {
+  background-color: #025464;
+}
+
+/* Error message styles */
+.ant-form-item-explain {
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+/* Success notification style */
+.ant-notification-notice-message {
+  color: #52c41a;
+}
+
+/* Error notification style */
+.ant-notification-notice-with-icon .ant-notification-notice-message {
+  color: #ff4d4f;
+}
+
+
+/* Manage Users CSS  */
+
+/* Add styles for the Manage Patients page */
+.manage-users-container {
+  background-color: #f0f0f0;
+  height: 100vh;
+}
+
+.manage-users-content {
+  margin: 25px auto;
+  max-width: 800px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.manage-users-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.manage-users-table-container {
+  margin-top: 20px;
+}
+
+.manage-users-table-cell {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.manage-users-actions-cell {
+  display: flex;
+  gap: 10px;
+}
+
+/* Styling for the Delete button */
+.manage-users-actions-cell .MuiButton-containedSecondary {
+  background-color: #ff3d00;
+  color: #fff;
+}
+
+.manage-users-actions-cell .MuiButton-containedSecondary:hover {
+  background-color: #b52700;
+}
+
 
 
