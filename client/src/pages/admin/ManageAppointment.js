@@ -1,70 +1,97 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Table, Tag } from "antd";
-import AdminNav from "../../Data/AdminNavbar";
-import "../../styles/AdminStyles.css";
+import axios from "axios";
+import moment from "moment";
+import AdminNavbar from "../../Data/AdminNavbar";
+import "../../styles/AdminStyles.css"
 
-const ManageAppointment = () => {
+const ManageAppointments = () => {
   const [appointments, setAppointments] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Fetch all appointments when the component mounts
     fetchAppointments();
   }, []);
 
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get("/api/v1/admin/appointments");
-      setAppointments(response.data.appointments);
-      setLoading(false);
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Fetch all appointments using the API endpoint
+      const response = await axios.get(
+        "/api/v1/admin/view-all-appointments",
+        config
+      );
+
+      if (response.data.success) {
+        // Update the appointments state with the data
+        setAppointments(response.data.data);
+      }
     } catch (error) {
-      console.log("Error fetching appointments:", error);
-      setError("Error fetching appointments");
-      setLoading(false);
+      console.error("Error:", error);
     }
   };
+  // console.log(appointments);
 
   const columns = [
     {
-      title: "User",
-      dataIndex: "users",
-      key: "users",
-      render: (users) => <span>{users.name}</span>,
+      title: "User Name",
+      dataIndex: "userId", // Access the name field from the nested userId object
+      key: "userName",
+      render: (users) => (users && users.name) || "N/A",
+    },
+    {
+      title: "Doctor Name",
+      dataIndex: "doctorName",
+      key: "doctorName",
+      render: (doctorName) => doctorName || "N/A",
+      // render: (doctors) => {
+      //   console.log(doctors); // Log the doctors data to the console
+      //   return (doctors && doctors.doctorName) || "N/A";
+      // },
     },
     {
       title: "Appointment Date",
       dataIndex: "date",
       key: "date",
+      render: (date) => moment(date).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       title: "Appointment Time",
       dataIndex: "time",
       key: "time",
+      render: (time) => moment(time).format("HH:mm"),
     },
     {
-      title: "Status",
+      title: "Appointment Status",
       dataIndex: "status",
       key: "status",
       render: (status) => (
-        <Tag color={status === "Pending" ? "orange" : "green"}>{status}</Tag>
+        <Tag
+          color={
+            status === "pending" ? "gold" : status === "confirmed" ? "green" : "red"
+          }
+        >
+          {status}
+        </Tag>
       ),
     },
   ];
 
   return (
-    <div>
-      <AdminNav />
-      <div className="containers">
-        <h2 className="heading text-left">Manage Appointments (Currently Not Working)</h2>
-        <Table
-          dataSource={appointments}
-          columns={columns}
-          rowKey={(record) => record._id}
-        />
+    <div className="admin-appointments-container">
+      <AdminNavbar />
+      <h1 className="admin-appointments-title">Appointments List</h1>
+      <div className="appointmnt-tble-container">
+        <Table dataSource={appointments} columns={columns} />
       </div>
     </div>
   );
 };
 
-export default ManageAppointment;
+export default ManageAppointments;

@@ -11,10 +11,10 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import PublicRoute from "./components/PublicRoute";
 import BookAppointment from "./pages/BookAppointment";
 import ViewDoctors from "./pages/ViewDoctors";
-import ViewAppointments from "./pages/ViewAppointments";
 import AdminProtectedRoutes from "./components/AdminProtectedRoutes";
-import ManageAppointment from "./pages/admin/ManageAppointment";
 import ManageUsers from "./pages/admin/ManageUsers";
+import UserAppointments from "./pages/ViewAppointments";
+import ManageAppointments from "./pages/admin/ManageAppointment";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -66,10 +66,10 @@ function App() {
               }
             ></Route>
             <Route
-              path="/admin/appointments"
+              path="/admin/view-all-appointments"
               element={
                 <AdminProtectedRoutes>
-                  <ManageAppointment />
+                  <ManageAppointments />
                 </AdminProtectedRoutes>
               }
             ></Route>
@@ -107,14 +107,14 @@ function App() {
               }
             ></Route>
 
-            {/* <Route
+            <Route
               path="/view-appointments"
               element={
-                // <ProtectedRoutes>
-                <ViewAppointments />
-                // </ProtectedRoutes>
+                <ProtectedRoutes>
+                <UserAppointments/>
+                 </ProtectedRoutes>
               }
-            ></Route> */}
+            ></Route>
 
             {/* <Route path="/404" element={<NotFoundPage />}></Route> */}
             {/* Add a catch-all route for any other unknown routes */}

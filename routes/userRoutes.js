@@ -5,7 +5,7 @@ const {
   authController,
   bookAppointmentController,
   viewAppointmentController,
-  // bookAvailabilityController,
+  checkAvailabilityController,
 } = require("../controllers/userCtrl");
 const authmiddleware = require("../middlewares/authmiddleware");
 
@@ -25,6 +25,10 @@ router.post('/getUserData', authmiddleware, authController);
 // BOOK APPOINTMENT || POST
 router.post("/book-appointment", authmiddleware, bookAppointmentController);
 
-router.get('/appointments/:userId', viewAppointmentController);
+// CHECK AVAILABILITY || POST
+router.post("/check-availability", checkAvailabilityController);
+
+// VIEW APPOINTMENT || GET
+router.get('/view-appointments/:users', authmiddleware, viewAppointmentController);
 
 module.exports = router;

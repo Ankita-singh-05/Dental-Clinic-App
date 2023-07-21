@@ -8,20 +8,6 @@
   flex-direction: column;
 }
 
-/* .hero {
-  flex: 1;
-  background-image: url("../../public/hero.jpg");
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.7em;
-  font-weight: 600;
-  color: #025464;
-  text-align: center;
-} */
-
 .hero {
     flex: 1;
     position: relative;
@@ -222,6 +208,42 @@ h4 {
 .manage-users-actions-cell .MuiButton-containedSecondary:hover {
   background-color: #b52700;
 }
+
+
+/* Manage appointments  */
+/* ManageAppointments.css */
+
+.admin-appointments-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 1.3em;
+  color: #025464;
+}
+
+.appointmnt-tble-container{
+  display: flex;
+  justify-content: center;
+}
+
+.ant-table {
+  /* width: 100%; */
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.ant-table-thead > tr > th {
+  font-weight: bold;
+}
+
+.ant-table-tbody > tr > td {
+  font-size: 15px;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background-color: #f0f0f0;
+}
+
+
 
 
 

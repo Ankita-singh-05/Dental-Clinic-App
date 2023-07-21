@@ -43,8 +43,6 @@ const ViewDoctors = () => {
             <TableHead>
               <TableRow>
                 <TableCell className="tableCell">Name</TableCell>
-                <TableCell className="tableCell">Phone</TableCell>
-                <TableCell className="tableCell">Email</TableCell>
                 <TableCell className="tableCell">Specialization</TableCell>
                 <TableCell className="tableCell">Address</TableCell>
                 <TableCell className="tableCell">Fees</TableCell>
@@ -53,9 +51,7 @@ const ViewDoctors = () => {
             <TableBody>
               {doctors.map((doctor) => (
                 <TableRow key={doctor.userId}>
-                  <TableCell>{doctor.name}</TableCell>
-                  <TableCell>{doctor.phone}</TableCell>
-                  <TableCell>{doctor.email}</TableCell>
+                  <TableCell>{doctor.name}</TableCell>            
                   <TableCell>{doctor.specialization}</TableCell>
                   <TableCell>{doctor.address}</TableCell>
                   <TableCell>{doctor.feesPerConsultation}</TableCell>

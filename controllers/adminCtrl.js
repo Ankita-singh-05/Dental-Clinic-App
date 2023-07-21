@@ -91,45 +91,35 @@ const deleteDoctorController = async (req, res) => {
 // Get all appointments
 const getAppointmentController = async (req, res) => {
   try {
-    const appointments = await appointmentModel.aggregate([
-      {
-        $lookup: {
-          from: "doctors", // Name of the doctors collection
-          localField: "doctorId", // Field in the appointments collection that corresponds to the doctor's ID
-          foreignField: "_id", // Field in the doctors collection that corresponds to the doctor's ID
-          as: "doctor", // Alias for the joined doctor data
-        },
-      },
-      {
-        $unwind: "$doctor", // Unwind the doctor array created by the $lookup stage
-      },
-      {
-        $project: {
-          _id: 1,
-          userId: 1,
-          date: 1,
-          status: 1,
-          time: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          "doctor.name": 1,
-          "doctor.phone": 1,
-          "doctor.email": 1,
-          "doctor.specialization": 1,
-          "doctor.address": 1,
-          "doctor.feesPerConsultation": 1,
-        },
-      },
-    ]);
+    // Fetch appointments for the logged-in user based on their user ID
+    const appointments = await appointmentModel
+      .find()
+      .populate("userId", "name email") // Include user name and email
+      .populate("doctorId", "name") // Include doctor name
+      .exec();
 
-    res.json({ success: true, appointments });
+    if (!appointments) {
+      return res.status(404).json({
+        success: false,
+        message: "No appointments found.",
+      });
+    }
+
+    // Send the appointments data as a response
+    res.status(200).json({
+      success: true,
+      data: appointments,
+    });
   } catch (error) {
-    console.error("Error fetching appointments:", error);
-    res
-      .status(500)
-      .json({ success: false, message: "Error fetching appointments" });
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching appointments",
+      error: error.message,
+    });
   }
 };
+
 
 // Get users data
 const getUsersDataController = async (req, res) => {

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const docSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
     },
     name: {
       type: String,
@@ -38,7 +38,11 @@ const docSchema = new mongoose.Schema(
       default: "pending",
     },
     timings: {
-      type: Object,
+      type: {
+        startTime: String, // The start time of working hours (e.g., "09:00")
+        endTime: String,   // The end time of working hours (e.g., "17:00")
+        days: [String],    // An array of working days (e.g., ["monday", "tuesday"])
+      },
       required: [true, "work timing is required"],
     },
   },

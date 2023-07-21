@@ -23,7 +23,7 @@ router.get("/doctors", getDoctorsData);
 router.delete("/doctors/:id", deleteDoctorController);
 
 // Get all appointments || GET
-router.get("/appointments",getAppointmentController);
+router.get("/view-all-appointments",getAppointmentController);
 
 // Get Admin Data || POST
 router.post("/getAdminData", authAdmin,   authController);

@@ -100,7 +100,7 @@ const HomePage = () => {
                 View Doctors
               </Button>
             </Link>
-            {/* <Link to="/view-appointments">
+            <Link to="/view-appointments">
               <Button
                 variant="contained"
                 color="secondary"
@@ -115,9 +115,9 @@ const HomePage = () => {
                   margin: "0 10px",
                 }}
               >
-                View Appointments
+                View Appointments Status
               </Button>
-            </Link> */}
+            </Link>
           </div>
           <div
             className="user-hero-image"

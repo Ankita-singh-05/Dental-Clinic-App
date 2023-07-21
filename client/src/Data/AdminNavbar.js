@@ -16,7 +16,7 @@ import { message, notification } from 'antd';
 
 
 const pages = [
-    { title: "Appointments", path: "/admin/appointments" },
+    { title: "Appointments", path: "/admin/view-all-appointments" },
     { title: "Doctors", path: "/admin/doctors" },
     { title: "Patient", path: "/admin/patients" },
 ]
@@ -50,7 +50,7 @@ const AdminNav = () => {
     const handlePageClick = (page) => {
         console.log(`Clicked ${page}`);
         if (page === 'Appointments') {
-            navigate('/admin/appointments')
+            navigate('/admin/view-all-appointments')
         } else if (page === 'Doctors') {
             navigate('/admin/doctors')
         } else if (page === 'Patient') {

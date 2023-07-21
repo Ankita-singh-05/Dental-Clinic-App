@@ -14,7 +14,7 @@ const AdminPage = () => {
             <h1>Welcome to the Admin Panel</h1>
             <h3>Manage and control various aspects of the system</h3>
             <div className="button-group">
-              {/* <Link to="/admin/appointments">
+              <Link to="/admin/view-all-appointments">
                 <Button
                   variant="contained"
                   color="primary"
@@ -32,7 +32,7 @@ const AdminPage = () => {
                 >
                   Manage Appointments
                 </Button>
-              </Link> */}
+              </Link>
 
               <Link to="/admin/doctors">
                 <Button

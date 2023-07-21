@@ -1,7 +1,9 @@
 const userModels = require("../models/userModels");
 const appointmentModel = require("../models/appointmentModel");
+const docModels = require("../models/docModels");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
 
 //register callback
 const registerController = async (req, res) => {
@@ -81,7 +83,8 @@ const loginController = async (req, res) => {
 // Book appointment controller
 const bookAppointmentController = async (req, res) => {
   try {
-    const { userId, doctorId, doctorInfo, userInfo, date, time } = req.body;
+    const { userId, doctorId, doctorInfo, userInfo, date, time, doctorName } =
+      req.body;
 
     // Create a new appointment
     const newAppointment = new appointmentModel({
@@ -91,6 +94,7 @@ const bookAppointmentController = async (req, res) => {
       userInfo,
       date,
       time,
+      doctorName,
     });
 
     // Save the appointment to the database
@@ -110,48 +114,113 @@ const bookAppointmentController = async (req, res) => {
   }
 };
 
-// Booking availability controller
-// const bookAvailabilityController = async (req, res) => {
-//   try {
-//     const { doctorName, date, time } = req.body;
+const checkAvailabilityController = async (req, res) => {
+  try {
+    const { doctorName, date, time } = req.body;
 
-//     // Check if there are any appointments for the specified doctor, date, and time
-//     const existingAppointment = await appointmentModel.findOne({
-//       doctorName,
-//       date,
-//       time,
-//     });
+    // Find the doctor in the database based on the given name
+    const doctor = await docModels.findOne({ name: doctorName });
 
-//     if (existingAppointment) {
-//       // The doctor is not available at the specified date and time
-//       res.status(200).json({
-//         success: false,
-//         message: "Doctor is not available at the specified date and time",
-//       });
-//     } else {
-//       // The doctor is available
-//       res.status(200).json({
-//         success: true,
-//         message: "Doctor is available at the specified date and time",
-//       });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({
-//       success: false,
-//       error: error.message,
-//       message: "Something went wrong!",
-//     });
-//   }
-// };
+    if (!doctor) {
+      // Doctor not found
+      return res.status(200).json({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
+
+    const { timings } = doctor;
+    if (!timings || Object.keys(timings).length === 0 || !timings.days) {
+      // Doctor's working days are not specified
+      return res.status(200).json({
+        success: false,
+        message: "Doctor's working days are not specified",
+      });
+    }
+
+    // Get the selected day of the week (e.g., "Monday", "Tuesday", etc.)
+    const selectedDayOfWeek = moment(date).format("dddd");
+
+    // Check if the selected day is one of the available days for the doctor
+    if (!timings.days.includes(selectedDayOfWeek.toLowerCase())) {
+      // Doctor is not available on the selected day
+      return res.status(200).json({
+        success: false,
+        message: "Doctor is not available at the specified date and time",
+      });
+    }
+
+    // Get the selected time in the format "HH:mm"
+    const selectedTime = moment(time).format("HH:mm");
+
+    // Check if the selected time falls within the doctor's working hours
+    const { startTime, endTime } = timings;
+    if (
+      !moment(selectedTime, "HH:mm").isBetween(
+        moment(startTime, "HH:mm"),
+        moment(endTime, "HH:mm"),
+        undefined,
+        "[]"
+      )
+    ) {
+      // Doctor is not available at the selected time
+      return res.status(200).json({
+        success: false,
+        message: "Doctor is not available at the specified date and time",
+      });
+    }
+
+    // Check if there are any appointments for the specified doctor, date, and time
+    const existingAppointment = await appointmentModel.findOne({
+      doctorName,
+      date,
+      time,
+    });
+
+    if (existingAppointment) {
+      // The doctor is not available at the specified date and time
+      return res.status(200).json({
+        success: false,
+        message: "Doctor is not available at the specified date and time",
+      });
+    }
+
+    // The doctor is available at the specified date and time
+    return res.status(200).json({
+      success: true,
+      message: "Doctor is available at the specified date and time",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      message: "Something went wrong!",
+    });
+  }
+};
+
 
 
 // View Appointment Controller
 const viewAppointmentController = async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const appointments = await Appointment.find({ userId });
+    // Fetch user data based on the user ID obtained from the authentication middleware
+    const users = req.body.userId;
 
+    // Log the user data to the console to verify if it contains the _id field
+    // console.log("User Data:", users);
+
+    // Fetch appointments for the user based on their ID
+    const appointments = await appointmentModel.find({ userId: users });
+    if (!appointments) {
+      return res.status(404).json({
+        success: false,
+        message: "No appointments found for this user.",
+      });
+    }
+
+    // Send the appointments data as a response
     res.status(200).json({
       success: true,
       data: appointments,
@@ -160,13 +229,11 @@ const viewAppointmentController = async (req, res) => {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching appointments',
+      message: "Error fetching appointments",
       error: error.message,
     });
   }
 };
-
-
 
 // auth controller
 const authController = async (req, res) => {
@@ -202,5 +269,5 @@ module.exports = {
   authController,
   bookAppointmentController,
   viewAppointmentController,
-  // bookAvailabilityController,
+  checkAvailabilityController,
 };
