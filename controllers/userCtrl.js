@@ -4,6 +4,7 @@ const docModels = require("../models/docModels");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
+const momentTimezone = require("moment-timezone");
 
 //register callback
 const registerController = async (req, res) => {
@@ -114,88 +115,62 @@ const bookAppointmentController = async (req, res) => {
   }
 };
 
+// Check the doctors availability
 const checkAvailabilityController = async (req, res) => {
   try {
-    const { doctorName, date, time } = req.body;
+    const { name, date, time } = req.body;
 
-    // Find the doctor in the database based on the given name
-    const doctor = await docModels.findOne({ name: doctorName });
+    // Parse the date and time values to create valid Date objects
+    const selectedDate = moment(date, "YYYY-MM-DD").toDate();
+    const selectedTime = moment(time, "HH:mm").toDate();
+
+    const doctor = await docModels.findOne({ name });
 
     if (!doctor) {
-      // Doctor not found
-      return res.status(200).json({
+      return res.status(404).json({
         success: false,
         message: "Doctor not found",
       });
     }
 
-    const { timings } = doctor;
-    if (!timings || Object.keys(timings).length === 0 || !timings.days) {
-      // Doctor's working days are not specified
+    // Check if the doctor's timings object exists and has the 'days' property
+    if (!doctor.timings || !doctor.timings.days || !Array.isArray(doctor.timings.days)) {
       return res.status(200).json({
         success: false,
-        message: "Doctor's working days are not specified",
+        message: "Doctor's working days not available",
       });
     }
 
-    // Get the selected day of the week (e.g., "Monday", "Tuesday", etc.)
-    const selectedDayOfWeek = moment(date).format("dddd");
+    // Check if the doctor is available on the selected date and time
+    const day = moment(selectedDate).format("dddd");
+    const startTime = moment(doctor.timings.startTime, "HH:mm").toDate();
+    const endTime = moment(doctor.timings.endTime, "HH:mm").toDate();
 
-    // Check if the selected day is one of the available days for the doctor
-    if (!timings.days.includes(selectedDayOfWeek.toLowerCase())) {
-      // Doctor is not available on the selected day
+    // Check if the selected day is in the doctor's working days array
+    if (!doctor.timings.days.includes(day)) {
       return res.status(200).json({
         success: false,
-        message: "Doctor is not available at the specified date and time",
+        message: "Doctor is not available on the selected day",
       });
     }
 
-    // Get the selected time in the format "HH:mm"
-    const selectedTime = moment(time).format("HH:mm");
-
-    // Check if the selected time falls within the doctor's working hours
-    const { startTime, endTime } = timings;
-    if (
-      !moment(selectedTime, "HH:mm").isBetween(
-        moment(startTime, "HH:mm"),
-        moment(endTime, "HH:mm"),
-        undefined,
-        "[]"
-      )
-    ) {
-      // Doctor is not available at the selected time
+    // Check if the selected time is within the doctor's working hours
+    if (!(selectedTime >= startTime && selectedTime <= endTime)) {
       return res.status(200).json({
         success: false,
-        message: "Doctor is not available at the specified date and time",
+        message: "Doctor is not available at the selected time",
       });
     }
 
-    // Check if there are any appointments for the specified doctor, date, and time
-    const existingAppointment = await appointmentModel.findOne({
-      doctorName,
-      date,
-      time,
-    });
-
-    if (existingAppointment) {
-      // The doctor is not available at the specified date and time
-      return res.status(200).json({
-        success: false,
-        message: "Doctor is not available at the specified date and time",
-      });
-    }
-
-    // The doctor is available at the specified date and time
     return res.status(200).json({
       success: true,
       message: "Doctor is available at the specified date and time",
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
+    console.error("Error:", error);
+    return res.status(500).json({
       success: false,
-      error: error.message,
-      message: "Something went wrong!",
+      message: "Something went wrong",
     });
   }
 };

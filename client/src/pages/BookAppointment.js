@@ -26,13 +26,17 @@ const BookAppointment = () => {
       const values = await form.validateFields(); // Retrieve the form values
       setLoading(true);
 
+      // Format the date and time before sending the request
+      const formattedDate = values.date.format("YYYY-MM-DD");
+      const formattedTime = values.time.format("HH:mm");
+
       // Send a POST request to check availability
       const res = await axios.post("/api/v1/users/check-availability", {
-        doctorName: values.doctorName,
-        date: values.date.format("YYYY-MM-DD"),
-        time: values.time.format("HH:mm"),
-        workingDays: values.workingDays,
+        name: values.doctorName,
+        date: formattedDate,
+        time: formattedTime,
       });
+
       if (res.data.success) {
         // Doctor is available
         notification.success({
@@ -50,7 +54,6 @@ const BookAppointment = () => {
       setLoading(false);
     }
   };
-
 
   // Function to handle the appointment booking
   const handleBooking = async () => {
@@ -140,7 +143,7 @@ const BookAppointment = () => {
             >
               <TimePicker format="HH:mm" />
             </Form.Item>
-            {/* <Form.Item>
+            <Form.Item>
               <Button
                 type="primary"
                 onClick={handleAvailabilityCheck}
@@ -149,7 +152,7 @@ const BookAppointment = () => {
               >
                 Check Availability
               </Button>
-            </Form.Item> */}
+            </Form.Item>
             <Form.Item>
               <Button
                 type="primary"

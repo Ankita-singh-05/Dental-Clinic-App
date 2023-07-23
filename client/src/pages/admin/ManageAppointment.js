@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag } from "antd";
+import { Table, Tag, message, Space, Button } from "antd";
 import axios from "axios";
 import moment from "moment";
 import AdminNavbar from "../../Data/AdminNavbar";
@@ -38,6 +38,42 @@ const ManageAppointments = () => {
   };
   // console.log(appointments);
 
+
+  const handleStatusUpdate = async (appointmentId, status) => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Send a PUT request to update the appointment status
+      const response = await axios.put(
+        `/api/v1/admin/update-appointment-status/${appointmentId}`,
+        { status },
+        config
+      );
+
+      if (response.data.success) {
+        // Update the appointments state with the updated status
+        const updatedAppointments = appointments.map((appointment) => {
+          if (appointment._id === appointmentId) {
+            return { ...appointment, status };
+          }
+          return appointment;
+        });
+        setAppointments(updatedAppointments);
+
+        message.success("Appointment status updated successfully");
+      } else {
+        message.error("Failed to update appointment status");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const columns = [
     {
       title: "User Name",
@@ -68,17 +104,34 @@ const ManageAppointments = () => {
       render: (time) => moment(time).format("HH:mm"),
     },
     {
-      title: "Appointment Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => (
-        <Tag
-          color={
-            status === "pending" ? "gold" : status === "confirmed" ? "green" : "red"
-          }
-        >
-          {status}
-        </Tag>
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          {record.status === "pending" && (
+            <>
+              <Button
+                // type="primary"
+                className="text-white bg-success"
+                onClick={() => handleStatusUpdate(record._id, "confirmed")}
+              >
+                Confirm
+              </Button>
+              <Button
+                className="text-white bg-danger"
+                onClick={() => handleStatusUpdate(record._id, "cancelled")}
+              >
+                Cancel
+              </Button>
+            </>
+          )}
+          {record.status === "confirmed" && (
+            <Tag color="green">Confirmed</Tag>
+          )}
+          {record.status === "cancelled" && (
+            <Tag color="red">Cancelled</Tag>
+          )}
+        </Space>
       ),
     },
   ];

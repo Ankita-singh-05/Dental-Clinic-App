@@ -36,21 +36,23 @@ const AddDoctors = ({ doctor }) => {
   const onFinishHandler = async (values) => {
     try {
       dispatch(showLoading());
-
+  
       const { timings, ...data } = values;
-      const timingsValue =
-        timings && timings.length > 0
-          ? [timings[0].format("HH:mm"), timings[1].format("HH:mm")]
-          : [];
-
+  
+      // Extract the startTime, endTime, and days properties from timings object
+      const startTime = timings[0].format("HH:mm");
+      const endTime = timings[1].format("HH:mm");
+      const days = values["timings.days"];
+  
       let res;
       if (doctor) {
         // If doctor prop is available, it means we are editing an existing doctor
         res = await axios.put(`/api/v1/admin/doctors/${doctor._id}`, {
           ...data,
           timings: {
-            startTime: timingsValue[0] || "",
-            endTime: timingsValue[1] || "",
+            startTime: startTime || "",
+            endTime: endTime || "",
+            days: days || [], // Ensure days array is provided
           },
         });
       } else {
@@ -58,12 +60,13 @@ const AddDoctors = ({ doctor }) => {
         res = await axios.post("/api/v1/admin/add-doctors", {
           ...data,
           timings: {
-            startTime: timingsValue[0] || "",
-            endTime: timingsValue[1] || "",
+            startTime: startTime || "",
+            endTime: endTime || "",
+            days: days || [], // Ensure days array is provided
           },
         });
       }
-
+  
       dispatch(hideLoading());
       if (res.data.success) {
         notification.success({
@@ -179,8 +182,8 @@ const AddDoctors = ({ doctor }) => {
                 </Form.Item>
               </Col>
               <Col xs={24} md={24} lg={8}>
-                <Form.Item label="Working Days" name="days" required>
-                  <Select mode="multiple" placeholder="Select working days">
+                <Form.Item label="Working Days" name="timings.days" required>
+                  <Select mode="multiple" placeholder="Select working days" required>
                     <Option value="Monday">Monday</Option>
                     <Option value="Tuesday">Tuesday</Option>
                     <Option value="Wednesday">Wednesday</Option>

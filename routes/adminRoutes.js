@@ -7,6 +7,7 @@ const {
   getAppointmentController,
   getUsersDataController,
   deleteUserController,
+  updateAppointmentStatus,
 } = require("../controllers/adminCtrl");
 
 const authAdmin = require("../middlewares/authAdmin");
@@ -26,12 +27,15 @@ router.delete("/doctors/:id", deleteDoctorController);
 router.get("/view-all-appointments",getAppointmentController);
 
 // Get Admin Data || POST
-router.post("/getAdminData", authAdmin,   authController);
+router.post("/getAdminData", authController);
 
 // Get Users Data || GET
 router.get("/patients", getUsersDataController);
 
 //  Delete User || DELETE  
 router.delete('/patients/:userId', deleteUserController);
+
+// Update appointment status
+router.put("/update-appointment-status/:id", updateAppointmentStatus);
 
 module.exports = router;

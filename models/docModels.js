@@ -7,7 +7,7 @@ const docSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: [true, "first name is required"],
+      required: [true, "name is required"],
     },
     phone: {
       type: String,

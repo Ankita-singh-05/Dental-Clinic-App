@@ -163,6 +163,41 @@ const deleteUserController = async (req, res) => {
 };
 
 
+// Update appointment status
+const updateAppointmentStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    // Find the appointment in the database based on the provided ID
+    const appointment = await appointmentModel.findById(id);
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
+
+    // Update the appointment status
+    appointment.status = status;
+    await appointment.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Appointment status updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+    });
+  }
+};
+
+
+
 // auth controller
 const authController = async (req, res) => {
   try {
@@ -201,5 +236,6 @@ module.exports = {
   getAppointmentController,
   authController,
   getUsersDataController, 
-  deleteUserController
+  deleteUserController,
+  updateAppointmentStatus,
 };
