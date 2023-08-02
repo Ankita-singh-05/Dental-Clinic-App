@@ -1,10 +1,8 @@
 # <h1>DENTAL CLINIC APPLICATION</h1>
-<br />
 
 ## Modules of the application
 <li> Admin Module </li>
 <li> User Module </li>
-<br />
 
 ## Functionalities --->
 
