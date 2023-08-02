@@ -9,6 +9,9 @@
 ### 1. Admin Module -
 <li> <b>1. Manage Appointments-</b> The admin will be able to manage all the appointments of the users. Here the admin will be able to perform the following operations of cancel, pending or confirm status of the appointment. </li>
 <br />
+<p align="center">
+  <img src="./images/check-availability-1.png" width="350" title="hover text">
+</p>
 
 <li> <b>2. Add Doctors-</b> The admin will be able to add or onboard the doctors to the app.</li>
 <br />
